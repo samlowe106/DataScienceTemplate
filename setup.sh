@@ -6,3 +6,5 @@ pipx install poetry
 poetry init
 poetry add matplotlib notebook pandas scikit-learn seaborn tensorflow torch
 poetry install
+
+mkdir data
