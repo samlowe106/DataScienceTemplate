@@ -1,5 +1,5 @@
 python -m venv venv
-apt install pipx
+apt install pipx -y
 pipx ensurepath
 
 pipx install poetry
