@@ -1,3 +1,4 @@
+python -m venv venv
 apt install pipx
 pipx ensurepath
 
