@@ -1,11 +1,14 @@
 python -m venv venv
-apt install pipx -y
-pipx ensurepath
+source venv/bin/activate
 
-pipx install poetry
+#apt install pipx -y
+#pipx ensurepath
+#pipx install poetry
 
 poetry init
+# Additional dependencies should be added below!
 poetry add matplotlib notebook pandas scikit-learn seaborn tensorflow torch
 poetry install
 
 mkdir data
+rm setup.sh
