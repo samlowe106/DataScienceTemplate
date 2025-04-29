@@ -7,7 +7,7 @@ source venv/bin/activate
 
 poetry init
 # Additional dependencies should be added below!
-poetry add matplotlib notebook pandas scikit-learn seaborn tensorflow torch
+poetry add matplotlib notebook pandas scikit-learn seaborn tensorflow tensorflow-datasets torch
 poetry install
 
 mkdir data
