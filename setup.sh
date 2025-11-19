@@ -1,17 +1,9 @@
-#python -m venv .venv
-#source venv/bin/activate
-pyenv local 3.14
+uv python pin 3.13.9 # tensorflow isn't compatible with 3.14 yet
+uv init
 
-#apt install pipx -y
-#pipx ensurepath
-#pipx install poetry
-
-poetry init
 # only installing top level dependencies -- numpy, pandas, matplotlib are included
 # Additional dependencies should be added below!
-
-poetry add notebook geopandas geopy scikit-learn seaborn tensorflow tensorflow-datasets torch pre-commit
-poetry install
+uv add notebook geopandas geopy scikit-learn seaborn tensorflow tensorflow-datasets torch pre-commit
 
 pre-commit autoupdate
 pre-commit install
