@@ -8,6 +8,7 @@ uv add notebook geopandas geopy scikit-learn seaborn tensorflow tensorflow-datas
 pre-commit autoupdate
 pre-commit install
 
+mkdir data
 mkdir data/raw
 mkdir data/clean
 
