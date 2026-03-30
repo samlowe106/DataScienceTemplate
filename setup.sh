@@ -3,13 +3,9 @@ uv init
 
 # only installing top level dependencies -- numpy, pandas, matplotlib are included
 # Additional dependencies should be added below!
-uv add notebook geopandas geopy scikit-learn seaborn tensorflow tensorflow-datasets torch pre-commit
+uv add httpx notebook geopandas geopy scikit-learn seaborn tensorflow tensorflow-datasets torch pre-commit
 
 pre-commit autoupdate
 pre-commit install
-
-mkdir data
-mkdir data/raw
-mkdir data/clean
 
 rm setup.sh
