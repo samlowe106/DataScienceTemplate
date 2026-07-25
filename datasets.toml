@@ -1,0 +1,33 @@
+# Dataset catalogue: every data set this project depends on, declared once.
+# `uv run data/fetch.py` (see its docstring) downloads these into data/ and
+# records each artifact's sha256 in datasets.lock for reproducibility.
+#
+# Each [datasets.NAME] table supports:
+#   source_url    direct download URL; {key} is replaced when requires_key is set
+#   output_path   where the artifact lands, relative to data/ (raw/... or clean/...)
+#   description   short human-readable summary, shown by the status listing
+#   sha256        optional: verify the download against this hash (via pooch)
+#   transform     optional: post-download cleaning step, a function in data/transforms.py
+#   download_name optional: filename for the intermediate download in data/cache/
+#   requires_key  optional: read an API key from the env var named by key_env
+#   key_env       env var (or .env entry) holding that key, e.g. "CENSUS_API_KEY"
+#   manual        optional: file can't be auto-downloaded; fetch.py prints instructions
+#   instructions  shown when a manual file is missing or an API key is absent
+#
+# A nested [datasets.NAME.provenance] table holds citation metadata (title,
+# source_url, year, license, notes). `uv run data/fetch.py --credits` renders
+# every entry as a Markdown bullet for the README's Data Set section.
+#
+# Example (delete once you've added real datasets):
+#
+# [datasets.example]
+# source_url = "https://example.com/archive.zip"
+# output_path = "raw/example/data.csv"
+# description = "What this file is and why the project needs it"
+# transform = "unzip"
+#
+# [datasets.example.provenance]
+# title = "Example Data Set"
+# source_url = "https://example.com/"
+# year = 2026
+# license = "CC BY 4.0"

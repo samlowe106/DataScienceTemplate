@@ -20,16 +20,15 @@ else
     echo "verified $(uv --version)"
 fi
 
-uv python pin 3.13.9 # tensorflow isn't compatible with 3.14 yet
-uv init
-# uv add pre-commit pytest python-dotenv
-# touch .env
+# Installs the pinned Python (.python-version) and every dependency in uv.lock,
+# including the dev group (pre-commit, notebook).
+uv sync
 
-# only installing top level dependencies -- numpy, pandas, matplotlib are included
-# Additional dependencies should be added below!
-uv add geopandas geopy httpx huggingface notebook pre-commit scikit-learn seaborn tensorflow tensorflow-datasets torch
+# Holds API keys for gated datasets (see datasets.toml); loaded by data/fetch.py.
+touch .env
 
-pre-commit autoupdate
-pre-commit install
+# Bump hooks to their latest tags, then enable them for this clone.
+uv run pre-commit autoupdate
+uv run pre-commit install
 
 rm setup.sh

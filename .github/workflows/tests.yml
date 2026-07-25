@@ -1,0 +1,47 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded in-progress runs for the same branch / PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: .python-version
+      # runs every hook in .pre-commit-config.yaml (ruff, black, mypy, ...)
+      - uses: pre-commit/action@v3.0.1
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Installs uv, provisions Python from .python-version, and caches ~/.cache/uv.
+      # setup-uv no longer publishes a moving major tag, so pin a full version.
+      - uses: astral-sh/setup-uv@v8.2.0
+        with:
+          enable-cache: true
+
+      # Heads-up: this template ships tensorflow + torch, so the first sync on a
+      # cold cache downloads several GB; later runs reuse the uv cache.
+      - name: Sync environment
+        run: uv sync --frozen
+
+      # Options (verbose, coverage, durations) come from [tool.pytest.ini_options]
+      # in pyproject.toml, so this matches a local `uv run pytest` exactly.
+      - name: Run tests
+        run: uv run pytest

@@ -144,6 +144,9 @@ poetry_venv
 .dmypy.json
 dmypy.json
 
+# Ruff
+.ruff_cache/
+
 # Pyre type checker
 .pyre/
 
@@ -159,3 +162,9 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Data artifacts: fetched and cleaned locally by data/fetch.py. Only the
+# catalogue (datasets.toml) and the hash lockfile (datasets.lock) are committed.
+data/raw/
+data/clean/
+data/cache/

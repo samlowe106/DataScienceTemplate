@@ -1,0 +1,91 @@
+[project]
+name = "datasciencetemplate"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+# 3.13 because tensorflow doesn't support 3.14 yet; .python-version pins the
+# exact interpreter uv installs.
+requires-python = ">=3.13"
+dependencies = [
+    "geopandas>=1.0.0",
+    "geopy>=2.4.0",
+    "httpx>=0.27.0",
+    "huggingface-hub>=0.26.0",
+    "pooch>=1.8.0",
+    "python-dotenv>=1.0.0",
+    "scikit-learn>=1.5.0",
+    "seaborn>=0.13.0",
+    "tensorflow>=2.20.0",
+    "tensorflow-datasets>=4.9.0",
+    "torch>=2.6.0",
+    "tqdm>=4.66.0",
+]
+
+# Development tooling — installed by `uv sync` (uv syncs the dev group by default).
+[dependency-groups]
+dev = [
+    "notebook>=7.2.0",
+    "pre-commit>=4.0.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+]
+
+# This project is a collection of notebooks and scripts, not a distributable
+# library: `uv` installs the dependencies but never builds or installs the
+# project itself.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# data/ is not a package; putting it on the path lets tests `import fetch`.
+pythonpath = ["data"]
+# Default options so a bare `pytest` (or `uv run pytest`) matches CI exactly:
+# verbose output, a coverage report, and the 10 slowest test durations.
+addopts = "--verbose --cov=data --cov-report=term-missing --durations=10"
+
+[tool.coverage.run]
+source = ["data"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+# Uncomment to fail the build below a coverage threshold:
+# fail_under = 80
+
+[tool.black]
+# Pin to the running interpreter. Without this, black infers the newest grammar
+# compatible with requires-python and may format for a Python this interpreter
+# can't parse.
+target-version = ["py313"]
+
+# Ruff (linter). Rule selection lives here, not in the pre-commit args, so your
+# editor's Ruff integration enforces exactly the same rules. The pre-commit hook
+# only adds --fix, so commits auto-apply fixable violations.
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint]
+# Ruff 0.16+ enables a broad default rule set; extend-select pins the families we
+# care about so they stay on even if the defaults narrow again. Full list:
+# https://docs.astral.sh/ruff/rules/ T20 (flake8-print) is deliberately not
+# selected: print() is normal in notebooks and data scripts.
+extend-select = [
+    "I",    # isort: import ordering (replaces the standalone isort tool)
+    "UP",   # pyupgrade: modern syntax for the target Python version
+    "B",    # flake8-bugbear: likely bugs and footguns
+    "SIM",  # flake8-simplify: simpler equivalent code
+    "RET",  # flake8-return: return-statement hygiene
+    "PERF", # perflint: performance anti-patterns
+]
+
+# mypy (type checker). Config lives here so the editor, CLI, and pre-commit agree.
+# --install-types / --non-interactive stay as pre-commit args: they are CLI-only
+# and let the isolated hook environment fetch missing type stubs.
+[tool.mypy]
+python_version = "3.13"
+strict_optional = false
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+pretty = true
