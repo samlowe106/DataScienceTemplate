@@ -21,6 +21,7 @@ repos:
         args: [--pytest-test-first]  # expect test_*.py (pytest convention)
       - id: pretty-format-json
         args: [--autofix, --no-sort-keys]
+        exclude: \.ipynb$
       - id: sort-simple-yaml
       - id: trailing-whitespace
         # preserve Markdown hard line breaks (a line ending in two spaces)
