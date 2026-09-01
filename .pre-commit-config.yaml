@@ -28,7 +28,7 @@ repos:
         args: [--markdown-linebreak-ext, "md,markdown"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.0
+    rev: v0.16.5
     hooks:
       - id: ruff
         args: [--fix]
@@ -41,7 +41,7 @@ repos:
         args: [--safe]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v2.3.0"
+    rev: "v2.3.1"
     hooks:
       - id: mypy
         # Settings live in [tool.mypy] in pyproject.toml (shared with your editor).
